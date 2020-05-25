@@ -4,9 +4,13 @@ import pprint
 # sys.path.insert(0,'')
 # from nlp import Text
 import importlib.util
-spec = importlib.util.spec_from_file_location("Text", "/home/chinmay/Documents/data_science/modules/nlp.py")
-NLP = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(NLP)
+spec_0 = importlib.util.spec_from_file_location("Text", "/home/chinmay/Documents/data_science/modules/nlp.py")
+NLP = importlib.util.module_from_spec(spec_0)
+spec_0.loader.exec_module(NLP)
+
+from matrix import Matrix
+
+
 
 class Graph:
     graph = {}
@@ -223,5 +227,41 @@ class Graph:
 
         return(count)
 
-    def create_graph_from_matrix(self, matrix):
-        pass
+    def matrix2graph(self, array):
+        # def recurse(array, list_dimension_loop, counter):
+        #     if(counter == len(list_dimension_loop)):
+
+        
+        # Converting a matrix to a graph
+        mat = Matrix()
+        if(not mat.is_matrix(array)):
+            return(False)
+        number_of_dimensions = mat.number_of_dimensions(array)
+        list_dimension_loop = []
+        list_dimension_loop = ["i_{}".format(x) for x in range(1, number_of_dimensions + 1)]
+        print(list_dimension_loop)
+
+        return
+    
+    
+
+
+def recurse(array, num):
+    if(num > 1):
+        print("num = {}".format(str(num)))
+        recurse(array, num - 1)
+    else:
+        print("Here")
+        for item in range(0, len(array)):
+            print(item)
+
+dist = [
+    [[[0]], [[0]], [[0]]],
+    [[[0]], [[0]], [[0]]],
+    [[[0]], [['i']], [[0]]]
+]
+
+# recurse(dist, 4)
+
+obj = Graph()
+obj.matrix2graph(dist)
