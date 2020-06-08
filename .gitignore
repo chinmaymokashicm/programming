@@ -1,3 +1,5 @@
 __pycache__/
 .vscode/
 ./__pycache__/nlp.cpython-36.pyc
+testing.ipynb
+*.png

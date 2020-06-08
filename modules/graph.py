@@ -8,7 +8,7 @@ spec_0 = importlib.util.spec_from_file_location("Text", "/home/chinmay/Documents
 NLP = importlib.util.module_from_spec(spec_0)
 spec_0.loader.exec_module(NLP)
 
-from matrix import Matrix
+
 
 
 
@@ -227,41 +227,23 @@ class Graph:
 
         return(count)
 
-    def matrix2graph(self, array):
-        # def recurse(array, list_dimension_loop, counter):
-        #     if(counter == len(list_dimension_loop)):
+    def graph2coordinates(self, graph):
+        coordinates = []
 
-        
-        # Converting a matrix to a graph
-        mat = Matrix()
-        if(not mat.is_matrix(array)):
-            return(False)
-        number_of_dimensions = mat.number_of_dimensions(array)
-        list_dimension_loop = []
-        list_dimension_loop = ["i_{}".format(x) for x in range(1, number_of_dimensions + 1)]
-        print(list_dimension_loop)
+        def recurse(list_prev_coord, weight, dictionary):
+            result = []
+            for key, value in dictionary.items():
+                if(not isinstance(dictionary[key], dict)):
+                    list_prev_coord.append(key)
+                    weight = value
+                    result.append([list_prev_coord, weight])
+                else:
+                    recurse(
+                        list_prev_coord.append(key), 
+                        None, 
+                        {key: {} for key,value in dictionary.items()}[key]
+                        )
+            return(result)
 
-        return
-    
-    
+        return(recurse(coordinates, None, graph))
 
-
-def recurse(array, num):
-    if(num > 1):
-        print("num = {}".format(str(num)))
-        recurse(array, num - 1)
-    else:
-        print("Here")
-        for item in range(0, len(array)):
-            print(item)
-
-dist = [
-    [[[0]], [[0]], [[0]]],
-    [[[0]], [[0]], [[0]]],
-    [[[0]], [['i']], [[0]]]
-]
-
-# recurse(dist, 4)
-
-obj = Graph()
-obj.matrix2graph(dist)

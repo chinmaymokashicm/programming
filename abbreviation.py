@@ -10,6 +10,9 @@ If not, return False
 import sys
 sys.setrecursionlimit(50000)
 
+import functools
+# @functools.lru_cache(maxsize=128)
+
 def memoize(f):
     memo = {}
     def memoizer(*args, **kwargs):
@@ -20,7 +23,8 @@ def memoize(f):
         return(memo[key])
     return(memoizer)
 
-@memoize
+# @memoize
+@functools.lru_cache(maxsize=128)
 def abbr(a, b):
     if(len(a) < len(b)):
         return(False)

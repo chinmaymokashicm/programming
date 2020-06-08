@@ -14,48 +14,70 @@ For given 'x', calculate decibinary value
 """
 
 import math
+import functools
 
-def decibinary2decimal(x):
-    if(not isinstance(x, int)):
+
+def decibinary2decimal(decibinary):
+    if(not isinstance(decibinary, int)):
         raise ValueError('Please provide an integer')
-    else:
-        decimal = 0
-        string = str(x)
-        for i in range(len(string)):
-            next = int(int(string[i]) * math.pow(2, len(string) - i - 1))
-            # print(string[i] + ' * 2^' + str(len(string) - i - 1) + ' = ' + str(next))
-            decimal = decimal + next
-        return(decimal)
+    str_num = str(decibinary)[::-1]
+    decimal = 0
+    for index in range(0, len(str_num)):
+        decimal += pow(2, index) * int(str_num[index])
+    return(decimal)
+    
+def max_power(decimal):
+    if(not isinstance(decimal, int)):
+        raise ValueError('Please provide an integer')
+    max_power = 0
+    if(decimal == 0):
+        return(0)
+    return(int(math.log2(decimal)))
+    
+
+def memoize(f):
+    memo = {}
+    def memoizer(x, power, list_digits, final_list, max_power):
+        key = str(x) + str(power) + str(list_digits) + str(max_power)
+        if(key not in memo):
+            memo[key] = f(x, power, list_digits, final_list, max_power)
+        return(memo[key])
+    return(memoizer)
+
+
+# @functools.lru_cache(maxsize=128)
+@memoize
+def all_decimal2decibinary(x, power, list_digits, final_list, max_power):
+    if(power > max_power):
+        return(final_list)
+    for i in range(0, 10):
+        next_x = x - pow(2, power) * i
+        if(next_x == 0):
+            list_digits.append(i)
+            string = ''.join([str(x) for x in list_digits[::-1]])
+            final_list.append(string)
+            return(final_list)
+        elif(next_x > 0):
+            final_list = all_decimal2decibinary(next_x, power + 1, list_digits + [i], final_list, max_power)
+        else:
+            return(final_list)
+
+    return(final_list)
+    
+
+def decibinaryNumbers(x):
+    decimal = 0
+    current_x = 0
+    while(True):
+        list_decibinary = [int(item) for item in all_decimal2decibinary(decimal, 0, [], [], max_power(decimal))]
+        list_decibinary.sort(reverse=True)
+        if(current_x + len(list_decibinary) >= x):
+            return(list_decibinary[current_x + len(list_decibinary) - x])
+        else:
+            current_x += len(list_decibinary)
+            decimal += 1
+    return
 
 
 
-# def rec(digits, sum):
-#     if(d == 0 and s == 0):
-#         return(1)
-#     elif(d == 0 and s !=0):
-#         return(0)
-#     elif(s < 0):
-#         return(0)
-#     else:
-#         pass
-
-
-
-# print(decibinary2decimal(10))
-
-# output = []
-# for i in range(10001):
-#     output.append((i, decibinary2decimal(i)))
-
-# output.sort(key = lambda x: x[1])
-
-# print('X', end='\t\t\t\t')
-# print('Decibinary', end='\t')
-# print('Decimal')
-
-# print('==================================')
-
-# for i in range(len(output)):
-#     print(i+1, end='\t\t\t\t')
-#     print(output[i][0], end='\t\t\t\t')
-#     print(output[i][1])
+print(decibinaryNumbers(4789))
