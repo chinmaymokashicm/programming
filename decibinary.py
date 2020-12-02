@@ -15,6 +15,7 @@ For given 'x', calculate decibinary value
 
 import math
 import functools
+from collections import OrderedDict
 
 
 def decibinary2decimal(decibinary):
@@ -38,6 +39,9 @@ def max_power(decimal):
 def memoize(f):
     memo = {}
     def memoizer(x, power, list_digits, final_list, max_power):
+        # od = OrderedDict(memo)
+        # for item in list(od.keys())[-100:]:
+        #     od.pop(item)
         key = str(x) + str(power) + str(list_digits) + str(max_power)
         if(key not in memo):
             memo[key] = f(x, power, list_digits, final_list, max_power)
@@ -80,4 +84,4 @@ def decibinaryNumbers(x):
 
 
 
-print(decibinaryNumbers(4789))
+print(decibinaryNumbers(1900))
