@@ -86,8 +86,6 @@ def proportional_probability(list_integers, number_of_events=100):
         dict_outcomes[str(i)] = [decimal_random, get_corresponding_integer(list_new, list_scaled, decimal_random, offset)]
     dict_probabilities = {key: 0 for key in list_integers}
     for key, list_values in dict_outcomes.items():
-        # if(list_values[1] not in dict_probabilities.keys()):
-        #     dict_probabilities[list_values[1]] = 0
         dict_probabilities[list_values[1]] += 1
     return(dict_probabilities)
 

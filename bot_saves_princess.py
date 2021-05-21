@@ -38,15 +38,17 @@ def displayPathtoPrincess(n,grid):
         left_or_right = 'RIGHT'
 
     if("up_or_down" in locals()):
-        print(abs(pos_x - pri_x) * (up_or_down))
+        list_up_or_down = abs(pos_x - pri_x) * [up_or_down]
+        print("\n".join(list_up_or_down))
     if("left_or_right" in locals()):
-        print(abs(pos_y - pri_y) * (left_or_right))
+        list_left_or_right = abs(pos_y - pri_y) * [left_or_right]
+        print("\n".join(list_left_or_right))
     
 
 grid = [
-    ['-', '-', 'm'], 
     ['-', '-', '-'], 
-    ['-', 'p', '-']
+    ['-', '-', '-'], 
+    ['m', '-', 'p']
     ]
 n = 3
 
